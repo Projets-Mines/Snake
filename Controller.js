@@ -47,7 +47,7 @@ class Controller {
 
 
   detecter_queue(){
-
+  	
   	this.serpent.mourir();
 
   }

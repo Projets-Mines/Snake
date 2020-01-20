@@ -29,6 +29,58 @@ class ModelSerpent {
   avancer(){
 
   	//this.position .... 
+    while (this.vitesse != 0){
+
+          //sauvegarde des coordonnées actuelles pour supprimer
+      let oldTete = this.positionTete
+      let oldQueue = this.positionQueue
+
+      switch(x){
+
+        case 0:  //Vers le haut
+
+          let haut = this.positionTete[1] - this.vitesse
+          this.positionTete[1] -= this.vitesse
+
+          break;
+      
+        case 1: //Vers la droite
+
+          let droite = this.positionTete[0] + this.vitesse
+          this.positionTete[0] += this.vitesse
+          break;
+
+        case 2: //Vers le bas
+
+          let bas = this.positionTete[1] + this.vitesse
+          this.positionTete[1] += this.vitesse
+          break;
+
+        case 3: //Vers la gauche 
+
+          let gauche = this.positionTete[0] - this.vitesse
+          this.positionTete[0] -= this.vitesse
+          break;
+  
+      }
+
+      this.timer = setInterval(function(){this.deplacer();}, 100);
+
+    //supprimer effacer le canvas à l'ancienne position 
+    //this.carte.context.clearRect(oldX,oldY,this.largeur,this.hauteur)
+
+    //redéfinir le fond du canvas
+    //this.carte.set_background()
+
+
+    //placer le personnage à la nouvelle position sur le canvas
+    //this.carte.context.drawImage(this.image,this.posX,this.posY, 20, 20)
+
+
+
+      
+    
+    }
   }
 
   deplacer(direction){
@@ -40,6 +92,40 @@ class ModelSerpent {
   manger_fruit(){
 
   	this.taille += 1;
+    let positionAjoutCorp = []
+
+    if(this.positionQueue[2] == 0){
+
+      positionAjoutCorp[0] = this.positionQueue[0] 
+      positionAjoutCorp[1] = this.positionQueue[1] + this.vitesse
+      positionAjoutCorp[2] = this.positionQueue[2]
+      this.positionsCorps.push(positionAjoutCorp)
+
+    } else if (this.positionQueue[2] == 1){
+
+      positionAjoutCorp[0] = this.positionQueue[0] - this.vitesse
+      positionAjoutCorp[1] = this.positionQueue[1] 
+      positionAjoutCorp[2] = this.positionQueue[2]
+      this.positionsCorps.push(positionAjoutCorp)
+
+    } else if (this.positionQueue[2] == 2){
+
+      positionAjoutCorp[0] = this.positionQueue[0] 
+      positionAjoutCorp[1] = this.positionQueue[1] - this.vitesse
+      positionAjoutCorp[2] = this.positionQueue[2]
+      this.positionsCorps.push(positionAjoutCorp)
+
+    } else if (this.positionQueue[2] == 3){
+
+      positionAjoutCorp[0] = this.positionQueue[0] + this.vitesse
+      positionAjoutCorp[1] = this.positionQueue[1] 
+      positionAjoutCorp[2] = this.positionQueue[2]
+      this.positionsCorps.push(positionAjoutCorp)
+
+    }
+
+    this.positionQueue = positionAjoutCorp;
+
   }
 
   mourir(){
