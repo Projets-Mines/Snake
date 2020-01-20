@@ -16,7 +16,7 @@ class ModelSerpent {
 
   	this.score = 0;
   	this.vitesse = 1;
-  	this direction = 1; //0: haut, 1: droite, 2:bas, 3: gauche
+  	this.direction = 1; //0: haut, 1: droite, 2:bas, 3: gauche
 
   	this.positionTete = positionDepartTete; //[x,y]
   	this.positionQueue = positionDepartQueue; //[x,y]
@@ -50,7 +50,7 @@ class ModelSerpent {
 
   score(points){
 
-  	this.score + = points;
+  	this.score += points;
 
   }
 

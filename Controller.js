@@ -1,8 +1,8 @@
 class Controller {
 
-  constructor(ModelSerpent, ModelCarte, view) {
-    this.ModelSerpent = ModelSerpent;
-    this.ModelCarte = ModelCarte;
+  constructor(serpent, carte, view) {
+    this.serpent = serpent;
+    this.carte = carte;
     this.View = View;
   }
 
@@ -14,22 +14,22 @@ class Controller {
 
 	  	 case 37 : // touche gauche
 	  
-	      this.ModelSerpent.deplacer(3)
+	      this.serpent.deplacer(3)
 	    
 	      break;
 	    case 38 : // touche haut
 
-	       this.ModelSerpent.deplacer(0)
+	       this.serpent.deplacer(0)
 	      break;
 	    case 39 : // touche droite
 
 
-	       this.ModelSerpent.deplacer(1)
+	       this.serpent.deplacer(1)
 	      break;
 
 	    case 40 : // touche bas
 	      
-	       this.ModelSerpent.deplacer(2)
+	       this.serpent.deplacer(2)
 	      break;
 
 	    default :
@@ -39,22 +39,22 @@ class Controller {
 
   detecter_fruit(){
 
-  	this.ModelSerpent.manger_fruit();
-  	this.ModelCarte.remove_fruit(x,y);
-  	this.ModelCarte.add_fruit();
+  	this.serpent.manger_fruit();
+  	this.carte.remove_fruit(x,y);
+  	this.carte.add_fruit();
 
   }
 
 
   detecter_queue(){
 
-  	this.ModelSerpent.mourir();
+  	this.serpent.mourir();
 
   }
 
   detecter_mur(){
 
-  	this.ModelSerpent.mourir();
+  	this.serpent.mourir();
 
   }
 

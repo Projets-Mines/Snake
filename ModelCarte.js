@@ -1,11 +1,12 @@
-class Model {
+class ModelCarte {
 
 
   constructor(canvas) {
 
-  	this.context = canvas.getContext("2d");
+    this.canvas = canvas;
+  	this.context = this.canvas.getContext("2d");
   	canvas.crossOrigin = "Anonymous";
-  	this fruits = []; 
+  	this.fruits = []; 
 
 
   }
@@ -25,11 +26,7 @@ class Model {
 
   }
 
-  set_background(background){
-
-
-  }
-
+  
 
 
 
