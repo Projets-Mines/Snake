@@ -18,9 +18,9 @@ class ModelSerpent {
   	this.vitesse = 1;
   	this.direction = 1; //0: haut, 1: droite, 2:bas, 3: gauche
 
-  	this.positionTete = positionDepartTete; //[x,y]
-  	this.positionQueue = positionDepartQueue; //[x,y]
-  	this.positionsCorps = []; //[[x,y][x,y] ... ]
+  	this.positionTete = positionDepartTete; //[x,y,z] Coordonnées x,y  + direction z
+  	this.positionQueue = positionDepartQueue; //[x,y,z]
+  	this.positionsCorps = []; //[[x,y,z][x,y,z] ... ]
 
  	//skin
 
@@ -34,6 +34,7 @@ class ModelSerpent {
   deplacer(direction){
 
   	this.direction = direction;
+    this.iconeTete.src = "images/headsnake" + this.direction + ".png";
 
   }
 
