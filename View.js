@@ -1,62 +1,38 @@
 class View {
 
 
-  constructor(carte,backgroundFile) {
+  constructor(canvas,context,backgroundPath) {
 
-  	this.carte = carte;
-  	this.backgroundFile = backgroundFile;
-  	
-  	
+  	this.canvas = canvas;
+  	this.context = context;
+  	this.backgroundPath = backgroundPath;
+
   }
 
   disp_background(){
 
-  	this.carte.canvas.style.background="url('" + this.backgroundFile + "')";
+  	this.canvas.style.background="url('" + this.backgroundPath + "')";
   }
 
-  disp_walls(){
+  disp_walls(imgWall,x,y){
 
-  	var img = new Image();
-  	img.src = "images/wall.png";
+    this.context.drawImage(imgWall, x,y);
 
-  	var carte = this.carte;
+  }
 
-  	img.addEventListener('load', (e) => {
+  disp_serpent(iconeTete,iconeCorps,positionTete,positionQueue,positionsCorps){
 
-  			let i =0;
 
-  			while(i<carte.canvas.width){
+    var context = this.context;
+    context.clearRect(0, 0, 700, 700);
 
-  				carte.context.drawImage(img, i,0);
-  				i+=37;
-  			}
+  	iconeTete.addEventListener('load', (e) => {
+  		context.drawImage(iconeTete, positionTete[0],positionTete[1]);
+  	});
 
-  			i =0;
-
-  			while(i<carte.canvas.height){
-
-  				carte.context.drawImage(img, 0,i);
-  				i+=37;
-  			}
-
-  			i =0;
-
-  			while(i<carte.canvas.height){
-
-  				carte.context.drawImage(img, carte.canvas.height-37 ,i);
-  				i+=37;
-  			}
-
-  			i =0;
-
-  			while(i<carte.canvas.width){
-
-  				carte.context.drawImage(img, i ,carte.canvas.height-37);
-  				i+=37;
-  			}
-
-  	 });
-
+	iconeCorps.addEventListener('load', (e) => {
+  	  	context.drawImage(iconeCorps,positionQueue[0],positionQueue[1]);
+  	});
 
   }
 
