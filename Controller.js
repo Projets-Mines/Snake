@@ -41,14 +41,14 @@ class Controller {
 	  var positionsCorps = this.serpent.positionsCorps;
 
 	  this.view.disp_serpent(iconeTete,iconeCorps,positionTete,positionQueue,positionsCorps);
-	  this.generate_walls();
+	
   }
 
   detecter_fruit(){
 
   	this.serpent.manger_fruit();
   	this.carte.remove_fruit(x,y);
-  	this.carte.add_fruit();
+  	this.generate_fruit();
 
   }
 
@@ -123,9 +123,36 @@ class Controller {
   	var iconeCorps = this.serpent.iconeCorps;
   	var positionTete = this.serpent.positionTete;
   	var positionQueue = this.serpent.positionQueue;
+    var positionsCorps = this.serpent.positionsCorps;
 
-  	view.disp_serpent(iconeTete,iconeCorps,positionTete,positionQueue);
+    var iconeTeteState = false;
+    var iconeCorpsState = false;
 
+    iconeTete.addEventListener('load', (e) => {
+       iconeCorpsState = true;
+    });
+
+    iconeCorps.addEventListener('load',(e)=>{
+      iconeCorpsState = true;
+    });
+
+    if(iconeTeteState && iconeCorpsState){
+    	this.view.disp_serpent(iconeTete,iconeCorps,positionTete,positionQueue,positionsCorps);
+    }
+
+  }
+
+  generate_fruit(){
+
+    var iconeFruit = new Image();
+    iconeFruit.src="images/food.png";  	
+    this.carte.set_fruit();
+    var positionFruit = this.carte.positionFruit;
+
+    iconeFruit.addEventListener('load',(e)=>{
+      this.view.disp_fruit(iconeFruit,this.carte.positionFruit);
+    });
+  	
   }
 
 

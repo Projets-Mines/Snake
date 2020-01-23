@@ -6,18 +6,22 @@ class ModelCarte {
     this.canvas = canvas;
   	this.context = this.canvas.getContext("2d");
   	canvas.crossOrigin = "Anonymous";
-  	this.fruits = []; 
-
+  	this.positionFruit;
 
   }
 
-  add_fruit(){
+  set_fruit(){
 
+    var randomX = Math.floor(Math.random() * ((canvas.width-37) - 37 + 1)) + 37;
+    var randomY = Math.floor(Math.random() * ((canvas.height-37) - 37 + 1)) + 37;
+
+    this.positionFruit = [randomX,randomY];
 
   }
 
   remove_fruit(x,y){
 
+    
 
   }
 
@@ -25,11 +29,6 @@ class ModelCarte {
 
 
   }
-
-  
-
-
-
 
 
 
