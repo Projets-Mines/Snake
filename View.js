@@ -53,6 +53,13 @@ class View {
 
   }
 
+  disp_score(score){
+
+    var score_label = document.getElementById("score");
+    score_label.innerHTML = score;
+
+  }
+
 
   disp_all(){
  
