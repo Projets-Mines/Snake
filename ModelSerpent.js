@@ -35,7 +35,7 @@ class ModelSerpent {
 
   	//this.position .... 
     
-      console.log('c')
+      console.log(this.positionQueue+' '+this.positionTete)
           //sauvegarde des coordonnées actuelles pour supprimer
       
       let oldQueue = this.positionQueue
@@ -118,7 +118,7 @@ class ModelSerpent {
       }
 
       if (this.oldTete[0] == this.positionQueue[0] && this.oldTete[1] == this.positionQueue[1] ){
-            this.positionQueue[2] = oldTete[2]
+            this.positionQueue[2] = this.oldTete[2]
       } 
 
       switch(this.positionQueue[2]){

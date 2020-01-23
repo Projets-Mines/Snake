@@ -3,7 +3,7 @@ var canvas = document.getElementById("carte");
 var context = this.canvas.getContext('2d');
 
 var carte = new ModelCarte(canvas);
-var serpent = new ModelSerpent("Snake","images/headsnake2.png","images/bodysnake.png",canvas,carte,[100,100],[108,83]);
+var serpent = new ModelSerpent("Snake","images/headsnake2.png","images/bodysnake.png",canvas,carte,[100,100],[100,100]);
 
 var view = new View(canvas,context,"images/boardgame.png");
 
