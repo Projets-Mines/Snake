@@ -88,6 +88,7 @@ class ModelSerpent {
 
           if (this.positionTete[0] == positionCorpCourant[0] && this.positionTete[1] == positionCorpCourant[1] ){
             directionPCC = this.positionTete[2]
+            this.positionsCorps[i][2] = directionPCC
           } else {
             directionPCC = positionCorpCourant[2]
           }
