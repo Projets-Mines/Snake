@@ -1,6 +1,5 @@
 class View {
 
-
   constructor(canvas,context,backgroundPath){
   	this.canvas = canvas;
   	this.context = context;

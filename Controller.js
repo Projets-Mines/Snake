@@ -55,6 +55,7 @@ class Controller {
 
       console.log('c')
       this.serpent.avancer()
+      this.serpent.detecterMurs(this.view.positionsWall);
       var iconeTete = this.serpent.iconeTete;
       var iconeCorps = this.serpent.iconeCorps;
       var positionTete = this.serpent.positionTete;
@@ -175,11 +176,5 @@ class Controller {
     });
   	
   }
-
-
-
-
-
-
 
 }

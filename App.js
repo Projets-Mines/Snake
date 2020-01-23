@@ -1,4 +1,3 @@
-
 var canvas = document.getElementById("carte");
 var context = this.canvas.getContext('2d');
 
@@ -24,4 +23,3 @@ body.addEventListener('keydown',function(e){
 
 
 })
- 
