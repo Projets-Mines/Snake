@@ -11,7 +11,7 @@ const app = new Controller(serpent,carte,view);
 app.generate_background(canvas);
 app.generate_walls();
 app.generate_serpent(serpent.iconeTete,serpent.iconeCorps,serpent.positionTete,serpent.positionQueue);
-
+serpent.avancer();
 var body = document.getElementById('game_body');
 
 body.addEventListener('keydown',function(e){

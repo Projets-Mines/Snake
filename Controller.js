@@ -13,21 +13,28 @@ class Controller {
 	  	 case 37 : // touche gauche
 
 	      this.serpent.deplacer(3);
+        this.serpent.avancer()
 	    
 	      break;
 	    case 38 : // touche haut
 
-	      this.serpent.deplacer(0)
+	      this.serpent.deplacer(0);
+       this.serpent.avancer()
+
 	      break;
 	    case 39 : // touche droite
 
 
 	      this.serpent.deplacer(1)
+        this.serpent.avancer()
+
 	      break;
 
 	    case 40 : // touche bas
 	      
 	      this.serpent.deplacer(2)
+        this.serpent.avancer()
+
 	      break;
 
 	    default :
