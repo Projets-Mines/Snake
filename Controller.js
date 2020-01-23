@@ -4,6 +4,9 @@ class Controller {
     this.serpent = serpent;
     this.carte = carte;
     this.view = view;
+    var t = this;
+    this.timer = setInterval(function(){t.generate_avancer();}, 60); //timer pour déplacer l'ennemi
+    
   }
 
   gerer_deplacement(k){
@@ -13,28 +16,23 @@ class Controller {
 	  	 case 37 : // touche gauche
 
 	      this.serpent.deplacer(3);
-        this.serpent.avancer()
 	    
 	      break;
 	    case 38 : // touche haut
 
 	      this.serpent.deplacer(0);
-       this.serpent.avancer()
 
 	      break;
 	    case 39 : // touche droite
 
 
 	      this.serpent.deplacer(1)
-        this.serpent.avancer()
 
 	      break;
 
 	    case 40 : // touche bas
 	      
 	      this.serpent.deplacer(2)
-        this.serpent.avancer()
-
 	      break;
 
 	    default :
@@ -48,14 +46,30 @@ class Controller {
 	  var positionsCorps = this.serpent.positionsCorps;
 
 	  this.view.disp_serpent(iconeTete,iconeCorps,positionTete,positionQueue,positionsCorps);
-	  this.generate_walls();
+	
+  }
+
+  generate_avancer(){
+
+    var c = 0;
+
+      console.log('c')
+      this.serpent.avancer()
+      var iconeTete = this.serpent.iconeTete;
+      var iconeCorps = this.serpent.iconeCorps;
+      var positionTete = this.serpent.positionTete;
+      var positionQueue = this.serpent.positionQueue;
+      var positionsCorps = this.serpent.positionsCorps;
+
+      this.view.disp_serpent(iconeTete,iconeCorps,positionTete,positionQueue,positionsCorps);
+      
   }
 
   detecter_fruit(){
 
   	this.serpent.manger_fruit();
   	this.carte.remove_fruit(x,y);
-  	this.carte.add_fruit();
+  	this.generate_fruit();
 
   }
 
@@ -130,9 +144,36 @@ class Controller {
   	var iconeCorps = this.serpent.iconeCorps;
   	var positionTete = this.serpent.positionTete;
   	var positionQueue = this.serpent.positionQueue;
+    var positionsCorps = this.serpent.positionsCorps;
 
-  	view.disp_serpent(iconeTete,iconeCorps,positionTete,positionQueue);
+    var iconeTeteState = false;
+    var iconeCorpsState = false;
 
+    iconeTete.addEventListener('load', (e) => {
+       iconeCorpsState = true;
+    });
+
+    iconeCorps.addEventListener('load',(e)=>{
+      iconeCorpsState = true;
+    });
+
+    if(iconeTeteState && iconeCorpsState){
+    	this.view.disp_serpent(iconeTete,iconeCorps,positionTete,positionQueue,positionsCorps);
+    }
+
+  }
+
+  generate_fruit(){
+
+    var iconeFruit = new Image();
+    iconeFruit.src="images/food.png";  	
+    this.carte.set_fruit();
+    var positionFruit = this.carte.positionFruit;
+
+    iconeFruit.addEventListener('load',(e)=>{
+      this.view.disp_fruit(iconeFruit,this.carte.positionFruit);
+    });
+  	
   }
 
 

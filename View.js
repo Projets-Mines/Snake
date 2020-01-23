@@ -1,11 +1,16 @@
 class View {
 
 
-  constructor(canvas,context,backgroundPath) {
-
+  constructor(canvas,context,backgroundPath){
   	this.canvas = canvas;
   	this.context = context;
   	this.backgroundPath = backgroundPath;
+
+    this.walls = false;
+    this.serpent = false;
+    this.fruit = false;
+
+    this.positionsWall = [];
 
   }
 
@@ -16,27 +21,67 @@ class View {
 
   disp_walls(imgWall,x,y){
 
-    this.context.drawImage(imgWall, x,y);
+    this.walls = true;
 
+    this.imgWall = imgWall;
+    this.positionsWall.push([x,y]);
+
+    this.disp_all();
   }
 
   disp_serpent(iconeTete,iconeCorps,positionTete,positionQueue,positionsCorps){
 
+    this.serpent = true;
 
-    var context = this.context;
-    context.clearRect(0, 0, 700, 700);
+    this.iconeTete = iconeTete;
+    this.iconeCorps = iconeCorps;
+    this.positionTete = positionTete;
+    this.positionQueue = positionQueue;
+    this.positionsCorps = positionsCorps;	
 
-  	iconeTete.addEventListener('load', (e) => {
-  		context.drawImage(iconeTete, positionTete[0],positionTete[1]);
-  	});
+    this.disp_all();
 
-	iconeCorps.addEventListener('load', (e) => {
-  	  	context.drawImage(iconeCorps,positionQueue[0],positionQueue[1]);
-  	});
+  }
+
+  disp_fruit(iconeFruit,positionFruit){
+
+    this.fruit = true;
+
+    this.iconeFruit = iconeFruit;
+    this.positionFruit = positionFruit;
+
+    this.disp_all();
 
   }
 
 
+  disp_all(){
+ 
+    var context = this.context;
+    context.clearRect(0, 0, 700, 700);
+    
+    if(this.walls){
+      for(var i=0; i<this.positionsWall.length; i++){
 
+        context.drawImage(this.imgWall, this.positionsWall[i][0], this.positionsWall[i][1]);
+
+      }
+    }
+
+    if(this.fruit){
+    context.drawImage(this.iconeFruit,this.positionFruit[0],this.positionFruit[1]);
+    }
+
+    if(this.serpent){
+      context.drawImage(this.iconeTete, this.positionTete[0],this.positionTete[1]);
+      context.drawImage(this.iconeCorps,this.positionQueue[0],this.positionQueue[1]);
+
+      for (var i = 0; i<this.positionsCorps.length; i++) {    
+            context.drawImage(this.iconeCorps,this.positionCorps[i][0],this.positionCorps[i][0]);
+      }
+
+    }
+
+  }
 
 }
