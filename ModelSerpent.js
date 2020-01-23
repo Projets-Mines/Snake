@@ -209,6 +209,13 @@ class ModelSerpent {
 
   }
 
+  detecter_mur(positionsWall){
+
+
+
+
+  }
+
   mourir(){
 
   	this.vitesse = 0;
