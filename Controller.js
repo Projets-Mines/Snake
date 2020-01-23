@@ -51,11 +51,11 @@ class Controller {
 
   generate_avancer(){
 
-    var c = 0;
+    
 
-      console.log('c')
+      //console.log('c')
       this.serpent.avancer()
-      this.serpent.detecterMurs(this.view.positionsWall);
+      //this.serpent.detecterMurs(this.view.positionsWall);
       var iconeTete = this.serpent.iconeTete;
       var iconeCorps = this.serpent.iconeCorps;
       var positionTete = this.serpent.positionTete;

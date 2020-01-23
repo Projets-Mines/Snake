@@ -34,11 +34,10 @@ class ModelSerpent {
   avancer(){
 
   	//this.position .... 
-    
+
       console.log(this.positionQueue+' '+this.positionTete)
           //sauvegarde des coordonnées actuelles pour supprimer
       
-      let oldQueue = this.positionQueue
 
       switch(this.positionTete[2]){
 
@@ -69,11 +68,10 @@ class ModelSerpent {
   
       }
 
-      //let oldTete = this.positionTete
 
       if (this.positionsCorps.length != 0){
         for (var i = 0; i >= this.positionsCorps.length - 1; i++) {
-
+          console.log('boucle avancer')
           var positionCorpCourant = this.positionsCorps[i]
           //console.log()
           var directionPCC;
@@ -117,7 +115,11 @@ class ModelSerpent {
         }
       }
 
+      console.log('old Tete '+this.oldTete)
+      console.log('position Tete '+this.positionTete)
+      console.log('position Queue '+this.positionQueue)
       if (this.oldTete[0] == this.positionQueue[0] && this.oldTete[1] == this.positionQueue[1] ){
+          console.log('c')
             this.positionQueue[2] = this.oldTete[2]
       } 
 
@@ -165,7 +167,9 @@ class ModelSerpent {
   deplacer(direction){
 
   	this.positionTete[2] = direction;
-    this.oldTete = this.positionTete;
+    this.oldTete[0] = this.positionTete[0]
+    this.oldTete[1] = this.positionTete[1]
+    this.oldTete[2] = this.positionTete[2]
     this.iconeTete.src = "images/headsnake" + this.positionTete[2] + ".png";
 
   }
