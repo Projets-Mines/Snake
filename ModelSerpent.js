@@ -1,6 +1,6 @@
 class ModelSerpent {
 
-  constructor(name, iconeTete, iconeCorps, canvas, carte, positionDepartTete, positionDepartQueue) {
+  constructor(name, iconeTete, iconeCorps, positionDepartTete, positionDepartQueue) {
 
   	this.name = name;
 
@@ -9,14 +9,10 @@ class ModelSerpent {
   	this.iconeTete.src = iconeTete; //chemin de l'image
   	this.iconeCorps.src = iconeCorps; 
 
-  	this.canvas = canvas;
-  	this.carte = carte;
-
   	this.taille = 2; //tête et queue
 
   	this.score = 0;
-  	this.vitesse = 1;
-  	//this.direction = 1; //0: haut, 1: droite, 2:bas, 3: gauche
+  	this.vitesse = 3;
     this.oldTete = []
     this.oldQueue = []
   	this.positionTete = positionDepartTete; //[x,y,z] Coordonnées x,y  + direction z
@@ -25,9 +21,8 @@ class ModelSerpent {
     this.positionQueue[2] = 2
   	this.positionsCorps = []; //[[x,y,z][x,y,z] ... ]
 
-    //this.timer = setInterval(function(){t.avancer();}, 100);
-
- 	//skin
+    this.audioMourir =  new Audio('sounds/aie.mp3');
+    this.audioManger = new Audio('sounds/croq.mp3');
 
   }
 
@@ -168,7 +163,7 @@ class ModelSerpent {
 
   	this.positionTete[2] = direction;
     this.oldTete = this.positionTete;
-    this.iconeTete.src = "images/headsnake" + this.positionTete[2] + ".png";
+    this.iconeTete.src = "images/new/headsnake" + this.positionTete[2] + ".png";
 
   }
 
@@ -232,8 +227,6 @@ class ModelSerpent {
       default:
       return;
 
-
-
     }
 
   }
@@ -276,17 +269,26 @@ class ModelSerpent {
     this.positionQueue = positionAjoutCorp;
     this.score+=100;
 
+    audioManger.play();
   }
 
   detecter_mur(mapHeight, mapWidth){
 
     if(this.positionTete[1]<=37 || this.positionTete[1]>=(mapHeight-74) || this.positionTete[0]<=37 ||this.positionTete[0]>=(mapWidth-74)){
-
+      //Rencontre un mur : meurt
       this.mourir();
       return 1;
     }
 
+    //Ne meurt pas
     return 0;
+
+  }
+
+  detecter_corps(){
+
+    return 0;
+
 
   }
 
@@ -294,8 +296,8 @@ class ModelSerpent {
 
     if(this.vitesse!=0){
 
-      var audio = new Audio('sounds/aie.mp3');
-      audio.play();
+      //Jouer le son de mort
+      this.audioMourir.play();
     	this.vitesse = 0;
 
     }

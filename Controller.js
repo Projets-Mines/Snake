@@ -56,14 +56,16 @@ class Controller {
       }
       
       if(this.serpent.detecter_fruit(this.carte.positionFruit)==1){
+        
         //this.serpent.manger_fruit();
+        console.log("FRUIT")
         this.generate_fruit();
-        var audio = new Audio('sounds/croq.mp3');
-        audio.play();
+       
       }
 
+      //Vérifier si le serpent rencontre un mur ou se mord
+      if(this.serpent.detecter_mur(this.carte.canvas.height, this.carte.canvas.width)!=1 && this.serpent.detecter_corps()!=1){
 
-      if(this.serpent.detecter_mur(this.carte.canvas.height, this.carte.canvas.width)!=1){
         var iconeTete = this.serpent.iconeTete;
         var iconeCorps = this.serpent.iconeCorps;
         var positionTete = this.serpent.positionTete;
@@ -71,62 +73,35 @@ class Controller {
         var positionsCorps = this.serpent.positionsCorps;
 
         this.view.disp_serpent(iconeTete,iconeCorps,positionTete,positionQueue,positionsCorps);
+
+      }else{
+
+        //Mort: relancer le jeu
+        this.view.add_new_score(this.serpent.score);
+        this.start_game();
+
       }
 
+      //Appel de la vue pour afficher le score actuel
       this.view.disp_score(this.serpent.score);
       
   }
 
+
   generate_background(){
 
   	this.view.disp_background();
+
   }
 
   generate_walls(){
 
-  	var imgWall = new Image();
-  	imgWall.src = "images/wall.png";
+    this.carte.iconeMur.addEventListener('load', (e) => {
 
-  	var view = this.view;
-  	var canvasHeight = this.carte.canvas.height;
-  	var canvasWidth = this.carte.canvas.width;
+       this.carte.set_walls();
+       this.view.disp_walls(this.carte.iconeMur,this.carte.positionsWalls);
 
-  	imgWall.addEventListener('load', (e) => {
-
-  			let i =0;
-
-  			while(i<canvas.width){
-
-  				view.disp_walls(imgWall,i,0);
-  				i+=37;
-  			}
-
-  			i =0;
-
-  			while(i<canvasWidth){
-
-  				view.disp_walls(imgWall,0,i);
-  				i+=37;
-  			}
-
-  			i =0;
-
-  			while(i<canvasWidth){
-
-  				view.disp_walls(imgWall,canvasHeight-37,i);
-  				context.drawImage(imgWall, canvas.height-37 ,i);
-  				i+=37;
-  			}
-
-  			i =0;
-
-  			while(i<canvasWidth){
-
-  				view.disp_walls(imgWall,i,canvasHeight-37);
-  				i+=37;
-  			}
-
-  	 });
+     });
   }
 
   generate_serpent(){
@@ -156,15 +131,35 @@ class Controller {
 
   generate_fruit(){
 
-    var iconeFruit = new Image();
-    iconeFruit.src="images/food.png";  	
     this.carte.set_fruit();
     var positionFruit = this.carte.positionFruit;
+    console.log('generate_fruit')
 
-    iconeFruit.addEventListener('load',(e)=>{
-      this.view.disp_fruit(iconeFruit,this.carte.positionFruit);
+    this.carte.iconeFruit.addEventListener('load',(e)=>{
+      console.log("fruit chargé")
+      this.view.disp_fruit(this.carte.iconeFruit,this.carte.positionFruit);
     });
 
+    if(this.view.fruit==true){
+
+      this.view.disp_fruit(this.carte.iconeFruit,this.carte.positionFruit);
+
+    }
+
+  }
+
+  start_game(){
+
+    this.serpent = new ModelSerpent("Snake","images/new/headsnake2.png","images/new/bodysnake.png", [100,100],[108,83]);
+    var serpent = this.serpent;
+
+    this.generate_fruit();
+    this.generate_background(this.carte.canvas);
+    this.generate_walls();
+    this.generate_serpent(serpent.iconeTete,serpent.iconeCorps,serpent.positionTete,serpent.positionQueue);
+
+    this.generate_avancer();
+     
   }
 
 }

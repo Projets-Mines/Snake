@@ -1,12 +1,16 @@
 <!DOCTYPE html>
-<html style="background-color:black;">
+<html>
 	<head>
 		<meta charset="utf-8">
 		<title>Snake</title>
 	</head>
-	<body style="text-align:center;" id="game_body">
-		<canvas id="carte" width="700px" height="700px" style="border:2px solid white;"></canvas>
-		<a id="score" style="color:white;font-family:arial 12px;"></a>
+	<body style="display:flex; display-type:column; color:black;" id="game_body">
+		<canvas id="carte" width="1000px" height="700px" style="border:2px solid white; border-radius:20px;"></canvas>
+		<div id="menu" style="width: 100%; padding:20px;">
+			<h1 id="score" style="width:100%; text-align:center; font-family:arial; font-size:45px;"></h1><br>
+			<div id="high_score" style="border:1px solid; border-radius: 20px; height:50px; text-align:center;"></div>
+	
+		</div>	
 		<script src="ModelCarte.js"></script>
 		<script src="ModelSerpent.js"></script>
 		<script src="View.js"></script>

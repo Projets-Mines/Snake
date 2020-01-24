@@ -10,6 +10,7 @@ class View {
     this.fruit = false;
 
     this.positionsWall = [];
+    this.highScore;
 
   }
 
@@ -18,12 +19,13 @@ class View {
   	this.canvas.style.background="url('" + this.backgroundPath + "')";
   }
 
-  disp_walls(imgWall,x,y){
+
+  disp_walls(imgWall,positionsWall){
 
     this.walls = true;
 
     this.imgWall = imgWall;
-    this.positionsWall.push([x,y]);
+    this.positionsWall = positionsWall;
 
     this.disp_all();
   }
@@ -60,11 +62,22 @@ class View {
 
   }
 
+  add_new_score(score){
+
+    if(this.highScore<score){
+
+      this.highScore = score;
+      let grille_scores = document.getElementById("high_score");
+
+    }
+
+  }
+
 
   disp_all(){
  
     var context = this.context;
-    context.clearRect(0, 0, 700, 700);
+    context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     
     if(this.walls){
       for(var i=0; i<this.positionsWall.length; i++){
