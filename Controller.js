@@ -5,7 +5,7 @@ class Controller {
     this.carte = carte;
     this.view = view;
     var t = this;
-    this.timer = setInterval(function(){t.generate_avancer();}, 60); //timer pour déplacer l'ennemi
+    this.timer = setInterval(function(){t.generate_avancer();}, 10); //timer pour déplacer l'ennemi
     
   }
 
@@ -67,7 +67,7 @@ class Controller {
       }
       
       if(this.serpent.detecter_fruit(this.carte.positionFruit)==1){
-        //this.serpent.manger_fruit();
+        this.serpent.manger_fruit();
         this.generate_fruit();
         var audio = new Audio('sounds/croq.mp3');
         audio.play();

@@ -17,13 +17,14 @@ class ModelSerpent {
   	this.score = 0;
   	this.vitesse = 1;
   	//this.direction = 1; //0: haut, 1: droite, 2:bas, 3: gauche
-    this.oldTete = []
-    this.oldQueue = []
+    this.oldTetes = [];
+    this.oldQueue = [];
   	this.positionTete = positionDepartTete; //[x,y,z] Coordonnées x,y  + direction z
-    this.positionTete[2] = 2
+    this.positionTete[2] = 2;
   	this.positionQueue = positionDepartQueue; //[x,y,z]
     this.positionQueue[2] = 2
   	this.positionsCorps = []; //[[x,y,z][x,y,z] ... ]
+    this.oldTetes.push(this.positionTete);
 
     //this.timer = setInterval(function(){t.avancer();}, 100);
 
@@ -70,20 +71,25 @@ class ModelSerpent {
 
 
       if (this.positionsCorps.length != 0){
-        for (var i = 0; i >= this.positionsCorps.length - 1; i++) {
-          console.log('boucle avancer')
-          var positionCorpCourant = this.positionsCorps[i]
-          //console.log()
-          var directionPCC;
 
-          if (this.oldTete[0] == positionCorpCourant[0] && this.oldTete[1] == positionCorpCourant[1] ){
-            directionPCC = this.oldTete[2]
-            this.positionsCorps[i][2] = directionPCC
-          } else {
-            directionPCC = positionCorpCourant[2]
+        for (var i = 0; i < this.positionsCorps.length; i++) {
+
+          for (var j = 0 ; j < this.oldTetes.length; j++) {
+
+            if (this.oldTetes[j][0] == this.positionsCorps[i][0] && this.oldTetes[j][1] == this.positionsCorps[i][1] ){
+                this.positionsCorps[i][2] = this.oldTetes[j][2]
+                this.oldTetes.splice(j-1,1);
+            } 
+
+
           }
 
-          switch(directionPCC){
+          console.log('boucle avancer')
+          //var positionCorpCourant = this.positionsCorps[i]
+          //console.log()
+          //var directionPCC;
+
+          switch(this.positionsCorps[i][2]){
 
             case 0:  //Vers le haut
 
@@ -115,13 +121,24 @@ class ModelSerpent {
         }
       }
 
-      console.log('old Tete '+this.oldTete)
-      console.log('position Tete '+this.positionTete)
-      console.log('position Queue '+this.positionQueue)
-      if (this.oldTete[0] == this.positionQueue[0] && this.oldTete[1] == this.positionQueue[1] ){
+      //console.log('old Tete '+this.oldTetes[this.oldTetes.length - 1][0])
+      console.log('OLD TETE : ' + this.oldTetes)
+      console.log('OLD TETE 0 : ' + this.oldTetes[0])
+      console.log(this.oldTetes.length)
+      //console.log('position Tete '+this.positionTete)
+      //console.log('position Queue '+this.positionQueue)
+
+      for (var i = 0 ; i < this.oldTetes.length; i++) {
+        console.log('controle '+this.oldTetes[i][0] == this.positionQueue[0] && this.oldTetes[i][1] == this.positionQueue[1])
+        if (this.oldTetes[i][0] == this.positionQueue[0] && this.oldTetes[i][1] == this.positionQueue[1] ){
           console.log('c')
-            this.positionQueue[2] = this.oldTete[2]
-      } 
+            this.positionQueue[2] = this.oldTetes[i][2]
+            this.oldTetes.splice(i-1,1);
+        } 
+
+
+      }
+      
 
       switch(this.positionQueue[2]){
 
@@ -169,9 +186,13 @@ class ModelSerpent {
   deplacer(direction){
 
   	this.positionTete[2] = direction;
-    this.oldTete[0] = this.positionTete[0]
-    this.oldTete[1] = this.positionTete[1]
-    this.oldTete[2] = this.positionTete[2]
+    var oldTeteCourant = []
+    oldTeteCourant[0] = this.positionTete[0]
+    oldTeteCourant[1] = this.positionTete[1]
+    oldTeteCourant[2] = this.positionTete[2]
+    this.oldTetes.push(oldTeteCourant)
+    console.log('old tetes deplacer'+this.oldTetes)
+
     this.iconeTete.src = "images/headsnake" + this.positionTete[2] + ".png";
 
   }
@@ -250,13 +271,13 @@ class ModelSerpent {
     if(this.positionQueue[2] == 0){
 
       positionAjoutCorp[0] = this.positionQueue[0] 
-      positionAjoutCorp[1] = this.positionQueue[1] + this.vitesse
+      positionAjoutCorp[1] = this.positionQueue[1] + 32
       positionAjoutCorp[2] = this.positionQueue[2]
       this.positionsCorps.push(this.positionQueue) 
 
     } else if (this.positionQueue[2] == 1){
 
-      positionAjoutCorp[0] = this.positionQueue[0] - this.vitesse
+      positionAjoutCorp[0] = this.positionQueue[0] - 32
       positionAjoutCorp[1] = this.positionQueue[1] 
       positionAjoutCorp[2] = this.positionQueue[2]
       this.positionsCorps.push(this.positionQueue)
@@ -264,20 +285,22 @@ class ModelSerpent {
     } else if (this.positionQueue[2] == 2){
 
       positionAjoutCorp[0] = this.positionQueue[0] 
-      positionAjoutCorp[1] = this.positionQueue[1] - this.vitesse
+      positionAjoutCorp[1] = this.positionQueue[1] - 32
       positionAjoutCorp[2] = this.positionQueue[2]
       this.positionsCorps.push(this.positionQueue)
 
     } else if (this.positionQueue[2] == 3){
 
-      positionAjoutCorp[0] = this.positionQueue[0] + this.vitesse
+      positionAjoutCorp[0] = this.positionQueue[0] + 32
       positionAjoutCorp[1] = this.positionQueue[1] 
       positionAjoutCorp[2] = this.positionQueue[2]
       this.positionsCorps.push(this.positionQueue)
 
     }
 
-    this.positionQueue = positionAjoutCorp;
+    this.positionQueue[0] = positionAjoutCorp[0];
+    this.positionQueue[1] = positionAjoutCorp[1];
+    this.positionQueue[2] = positionAjoutCorp[2];
     this.score+=100;
 
   }

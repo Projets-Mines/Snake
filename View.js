@@ -36,7 +36,18 @@ class View {
     this.iconeCorps = iconeCorps;
     this.positionTete = positionTete;
     this.positionQueue = positionQueue;
-    this.positionsCorps = positionsCorps;	
+    this.positionsCorps = []
+    this.positionCorpCourant = []
+
+    for (var i = 0; i < positionsCorps.length ; i++) {
+
+      this.positionCorpCourant[0] = positionsCorps[i][0]
+      this.positionCorpCourant[1] = positionsCorps[i][1]
+      this.positionCorpCourant[2] = positionsCorps[i][2]
+      this.positionsCorps.push(this.positionCorpCourant)
+
+     
+    }
 
     this.disp_all();
 
@@ -83,7 +94,7 @@ class View {
       context.drawImage(this.iconeCorps,this.positionQueue[0],this.positionQueue[1]);
 
       for (var i = 0; i<this.positionsCorps.length; i++) {    
-            context.drawImage(this.iconeCorps,this.positionCorps[i][0],this.positionCorps[i][0]);
+            context.drawImage(this.iconeCorps,this.positionsCorps[i][0],this.positionsCorps[i][1]);
       }
 
     }
