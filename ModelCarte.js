@@ -12,24 +12,18 @@ class ModelCarte {
 
   set_fruit(){
 
-    var randomX = Math.floor(Math.random() * ((canvas.width-37) - 37 + 1)) + 37;
-    var randomY = Math.floor(Math.random() * ((canvas.height-37) - 37 + 1)) + 37;
+    var randomX = Math.floor(Math.random() * ((canvas.width-74) - 37 + 1)) + 37;
+    var randomY = Math.floor(Math.random() * ((canvas.height-74) - 37 + 1)) + 37;
 
     this.positionFruit = [randomX,randomY];
 
   }
 
-  remove_fruit(x,y){
+  remove_fruit(){
 
     
 
   }
-
-  fruit_here(x,y){
-
-
-  }
-
 
 
 }

@@ -50,7 +50,6 @@ class Controller {
   }
 
   generate_avancer(){
-
     
 
       //console.log('c')
@@ -63,28 +62,30 @@ class Controller {
       var positionsCorps = this.serpent.positionsCorps;
 
       this.view.disp_serpent(iconeTete,iconeCorps,positionTete,positionQueue,positionsCorps);
+      if(this.serpent.vitesse!=0){
+        this.serpent.avancer();
+      }
       
-  }
-
-  detecter_fruit(){
-
-  	this.serpent.manger_fruit();
-  	this.carte.remove_fruit(x,y);
-  	this.generate_fruit();
-
-  }
+      if(this.serpent.detecter_fruit(this.carte.positionFruit)==1){
+        //this.serpent.manger_fruit();
+        this.generate_fruit();
+        var audio = new Audio('sounds/croq.mp3');
+        audio.play();
+      }
 
 
-  detecter_queue(){
-  	
-  	this.serpent.mourir();
+      if(this.serpent.detecter_mur(this.carte.canvas.height, this.carte.canvas.width)!=1){
+        var iconeTete = this.serpent.iconeTete;
+        var iconeCorps = this.serpent.iconeCorps;
+        var positionTete = this.serpent.positionTete;
+        var positionQueue = this.serpent.positionQueue;
+        var positionsCorps = this.serpent.positionsCorps;
 
-  }
+        this.view.disp_serpent(iconeTete,iconeCorps,positionTete,positionQueue,positionsCorps);
+      }
 
-  detecter_mur(){
-
-  	this.serpent.mourir();
-
+      this.view.disp_score(this.serpent.score);
+      
   }
 
   generate_background(){
@@ -174,7 +175,7 @@ class Controller {
     iconeFruit.addEventListener('load',(e)=>{
       this.view.disp_fruit(iconeFruit,this.carte.positionFruit);
     });
-  	
+
   }
 
 }

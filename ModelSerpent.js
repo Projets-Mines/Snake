@@ -152,6 +152,8 @@ class ModelSerpent {
   
       }
 
+      this.score+=1;
+
       //supprimer effacer le canvas à l'ancienne position 
       //this.carte.context.clearRect(oldX,oldY,this.largeur,this.hauteur)
 
@@ -174,6 +176,72 @@ class ModelSerpent {
 
   }
 
+  detecter_fruit(positionFruit){
+
+    var x = positionFruit [0];
+    var y = positionFruit [1];
+
+    switch(this.positionTete[2]){
+
+      case 0:
+
+        if( (this.positionTete[0]>=positionFruit[0] && this.positionTete[0]<=(positionFruit[0]+29)
+          && this.positionTete[1]>=positionFruit[1] && this.positionTete[1]<=(positionFruit[1]+29) )
+          ||(this.positionTete[0]+32>=positionFruit[0] && this.positionTete[0]+32<=(positionFruit[0]+29)
+          && this.positionTete[1]>=positionFruit[1] && this.positionTete[1]<=(positionFruit[1]+29))
+            ){
+          return 1;
+        }
+
+      break;
+
+      case 1:
+
+        if( (this.positionTete[0]+32>=positionFruit[0] && this.positionTete[0]+32<=(positionFruit[0]+29)
+          && this.positionTete[1]>=positionFruit[1] && this.positionTete[1]<=(positionFruit[1]+29))
+          ||(this.positionTete[0]+32>=positionFruit[0] && this.positionTete[0]+32<=(positionFruit[0]+29)
+          && this.positionTete[1]+32>=positionFruit[1] && this.positionTete[1]+32<=(positionFruit[1]+29))
+            ){
+          return 1;
+        }
+
+      break;
+
+      case 2:
+
+      if( (this.positionTete[0]>=positionFruit[0] && this.positionTete[0]<=(positionFruit[0]+29)
+          && this.positionTete[1]+32>=positionFruit[1] && this.positionTete[1]+32<=(positionFruit[1]+29) )
+          ||(this.positionTete[0]+32>=positionFruit[0] && this.positionTete[0]+32<=(positionFruit[0]+29)
+          && this.positionTete[1]+32>=positionFruit[1] && this.positionTete[1]+32<=(positionFruit[1]+29))
+            ){
+          return 1;
+      }
+
+
+      break;
+
+      case 3:
+
+       if( (this.positionTete[0]>=positionFruit[0] && this.positionTete[0]<=(positionFruit[0]+29)
+          && this.positionTete[1]>=positionFruit[1] && this.positionTete[1]<=(positionFruit[1]+29))
+          ||(this.positionTete[0]>=positionFruit[0] && this.positionTete[0]<=(positionFruit[0]+29)
+          && this.positionTete[1]+32>=positionFruit[1] && this.positionTete[1]+32<=(positionFruit[1]+29))
+            ){
+          return 1;
+        }
+
+    
+      break;
+
+      default:
+      return;
+
+
+
+    }
+
+  }
+
   manger_fruit(){
 
   	this.taille += 1;
@@ -184,54 +252,61 @@ class ModelSerpent {
       positionAjoutCorp[0] = this.positionQueue[0] 
       positionAjoutCorp[1] = this.positionQueue[1] + this.vitesse
       positionAjoutCorp[2] = this.positionQueue[2]
-      this.positionsCorps.push(positionQueue)
+      this.positionsCorps.push(this.positionQueue) 
 
     } else if (this.positionQueue[2] == 1){
 
       positionAjoutCorp[0] = this.positionQueue[0] - this.vitesse
       positionAjoutCorp[1] = this.positionQueue[1] 
       positionAjoutCorp[2] = this.positionQueue[2]
-      this.positionsCorps.push(positionQueue)
+      this.positionsCorps.push(this.positionQueue)
 
     } else if (this.positionQueue[2] == 2){
 
       positionAjoutCorp[0] = this.positionQueue[0] 
       positionAjoutCorp[1] = this.positionQueue[1] - this.vitesse
       positionAjoutCorp[2] = this.positionQueue[2]
-      this.positionsCorps.push(positionQueue)
+      this.positionsCorps.push(this.positionQueue)
 
     } else if (this.positionQueue[2] == 3){
 
       positionAjoutCorp[0] = this.positionQueue[0] + this.vitesse
       positionAjoutCorp[1] = this.positionQueue[1] 
       positionAjoutCorp[2] = this.positionQueue[2]
-      this.positionsCorps.push(positionQueue)
+      this.positionsCorps.push(this.positionQueue)
 
     }
 
     this.positionQueue = positionAjoutCorp;
+    this.score+=100;
 
   }
 
-  detecter_mur(positionsWall){
+  detecter_mur(mapHeight, mapWidth){
 
+    if(this.positionTete[1]<=37 || this.positionTete[1]>=(mapHeight-74) || this.positionTete[0]<=37 ||this.positionTete[0]>=(mapWidth-74)){
 
+      this.mourir();
+      return 1;
+    }
 
+    return 0;
 
   }
 
   mourir(){
 
-  	this.vitesse = 0;
+    if(this.vitesse!=0){
+
+      var audio = new Audio('sounds/aie.mp3');
+      audio.play();
+    	this.vitesse = 0;
+
+    }
 
   } 
 
-  score(points){
-
-  	this.score += points;
-
-  }
-
+ 
 
 
 
