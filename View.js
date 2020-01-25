@@ -9,9 +9,6 @@ class View {
     this.serpent = false;
     this.fruit = false;
 
-    this.positionsWall = [];
-    this.highScore;
-
   }
 
   disp_background(){
@@ -55,24 +52,15 @@ class View {
 
   }
 
-  disp_score(score){
+  disp_score(score,highScore){
 
     var score_label = document.getElementById("score");
     score_label.innerHTML = score;
 
-  }
-
-  add_new_score(score){
-
-    if(this.highScore<score){
-
-      this.highScore = score;
-      let grille_scores = document.getElementById("high_score");
-
-    }
+    var high_score_div = document.getElementById("high_score");
+    high_score_div.innerHTML = "High Score : " + highScore;
 
   }
-
 
   disp_all(){
  

@@ -77,13 +77,12 @@ class Controller {
       }else{
 
         //Mort: relancer le jeu
-        this.view.add_new_score(this.serpent.score);
         this.start_game();
 
       }
 
       //Appel de la vue pour afficher le score actuel
-      this.view.disp_score(this.serpent.score);
+      this.view.disp_score(this.serpent.score,this.serpent.highScore);
       
   }
 
@@ -150,7 +149,7 @@ class Controller {
 
   start_game(){
 
-    this.serpent = new ModelSerpent("Snake","images/new/headsnake2.png","images/new/bodysnake.png", [100,100],[108,83]);
+    this.serpent = new ModelSerpent("Snake","images/new/headsnake2.png","images/new/bodysnake.png", [100,100],[108,83],this.serpent.highScore);
     var serpent = this.serpent;
 
     this.generate_fruit();

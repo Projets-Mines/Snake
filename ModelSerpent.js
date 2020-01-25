@@ -1,6 +1,6 @@
 class ModelSerpent {
 
-  constructor(name, iconeTete, iconeCorps, positionDepartTete, positionDepartQueue) {
+  constructor(name, iconeTete, iconeCorps, positionDepartTete, positionDepartQueue,scoreDepart) {
 
   	this.name = name;
 
@@ -23,6 +23,8 @@ class ModelSerpent {
 
     this.audioMourir =  new Audio('sounds/aie.mp3');
     this.audioManger = new Audio('sounds/croq.mp3');
+
+    this.highScore = scoreDepart;
 
   }
 
@@ -145,7 +147,8 @@ class ModelSerpent {
   
       }
 
-      this.score+=1;
+      this.set_score(1);
+     // this.score+=1;
 
       //supprimer effacer le canvas à l'ancienne position 
       //this.carte.context.clearRect(oldX,oldY,this.largeur,this.hauteur)
@@ -159,6 +162,17 @@ class ModelSerpent {
     
   }
 
+  set_score(x){
+
+    this.score += x;
+
+    if(this.highScore<this.score){
+
+      this.highScore = this.score;
+    }
+
+  }
+
   deplacer(direction){
 
   	this.positionTete[2] = direction;
@@ -168,9 +182,6 @@ class ModelSerpent {
   }
 
   detecter_fruit(positionFruit){
-
-    var x = positionFruit [0];
-    var y = positionFruit [1];
 
     switch(this.positionTete[2]){
 
@@ -269,7 +280,7 @@ class ModelSerpent {
     this.positionQueue = positionAjoutCorp;
     this.score+=100;
 
-    audioManger.play();
+    this.audioManger.play();
   }
 
   detecter_mur(mapHeight, mapWidth){
@@ -303,9 +314,6 @@ class ModelSerpent {
     }
 
   } 
-
- 
-
 
 
 }
