@@ -24,6 +24,7 @@ class ModelSerpent {
   	this.positionQueue = positionDepartQueue; //[x,y,z]
     this.positionQueue[2] = 2
   	this.positionsCorps = []; //[[x,y,z][x,y,z] ... ]
+    //this.positionsCorps.push(this.positionQueue);
     this.oldTetes.push(this.positionTete);
 
     //this.timer = setInterval(function(){t.avancer();}, 100);
@@ -36,9 +37,15 @@ class ModelSerpent {
 
   	//this.position .... 
 
-      console.log(this.positionQueue+' '+this.positionTete)
+      console.log(this.positionQueue+' '+this.positionTete+ ' '+ this.positionsCorps.length);
           //sauvegarde des coordonnées actuelles pour supprimer
+
+      if (this.positionsCorps.length == 0){
+
+        this.positionQueue[0] = this.positionTete[0] - 32;
+        this.positionQueue[1] = this.positionTete[1] - 32;
       
+      }
 
       switch(this.positionTete[2]){
 
@@ -70,18 +77,28 @@ class ModelSerpent {
       }
 
 
-      
+      if (this.positionsCorps.length != 0){
 
-      for (var i = 0 ; i < this.oldTetes.length; i++) {
-        console.log('controle '+this.oldTetes[i][0] == this.positionQueue[0] && this.oldTetes[i][1] == this.positionQueue[1])
-        if (this.oldTetes[i][0] == this.positionQueue[0] && this.oldTetes[i][1] == this.positionQueue[1] ){
-          console.log('c')
-            this.positionQueue[2] = this.oldTetes[i][2]
-            this.oldTetes.splice(i-1,1);
-        } 
+        this.positionsCorps[0][0] = this.positionTete[0];
+        this.positionsCorps[0][1] = this.positionTete[1];
+        this.positionsCorps[0][2] = this.positionTete[2];
+        
+        this.positionQueue[0] = this.positionsCorps[this.positionsCorps.length - 1][0];
+        this.positionQueue[1] = this.positionsCorps[this.positionsCorps.length - 1][1];
+        this.positionQueue[2] = this.positionsCorps[this.positionsCorps.length - 1][2];
 
+        for (var i = this.positionsCorps.length - 1; i >= 1; i--) {
+          this.positionsCorps[i][0] = this.positionsCorps[i - 1][0];
+          this.positionsCorps[i][1] = this.positionsCorps[i - 1][1];
+          this.positionsCorps[i][2] = this.positionsCorps[i - 1][2];
+        
+        }
 
+      } else {
+
+        this.positionQueue[2] = this.positionTete[2];
       }
+
       
 
       switch(this.positionQueue[2]){
@@ -113,17 +130,9 @@ class ModelSerpent {
   
       }
 
-      this.score+=1;
-
-      //supprimer effacer le canvas à l'ancienne position 
-      //this.carte.context.clearRect(oldX,oldY,this.largeur,this.hauteur)
-
-      //redéfinir le fond du canvas
-      //this.carte.set_background()
 
 
-      //placer le personnage à la nouvelle position sur le canvas
-      //this.carte.context.drawImage(this.image,this.posX,this.posY, 20, 20)    
+      this.score+=1;   
     
   }
 
