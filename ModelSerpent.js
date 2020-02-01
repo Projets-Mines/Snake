@@ -70,63 +70,7 @@ class ModelSerpent {
       }
 
 
-      if (this.positionsCorps.length != 0){
-
-        for (var i = 0; i < this.positionsCorps.length; i++) {
-
-          for (var j = 0 ; j < this.oldTetes.length; j++) {
-
-            if (this.oldTetes[j][0] == this.positionsCorps[i][0] && this.oldTetes[j][1] == this.positionsCorps[i][1] ){
-                this.positionsCorps[i][2] = this.oldTetes[j][2]
-                this.oldTetes.splice(j-1,1);
-            } 
-
-
-          }
-
-          console.log('boucle avancer')
-          //var positionCorpCourant = this.positionsCorps[i]
-          //console.log()
-          //var directionPCC;
-
-          switch(this.positionsCorps[i][2]){
-
-            case 0:  //Vers le haut
-
-              let haut = this.positionsCorps[i][1] - this.vitesse
-              this.positionsCorps[i][1] -= this.vitesse
-
-              break;
-          
-            case 1: //Vers la droite
-
-              let droite = this.positionsCorps[i][0] + this.vitesse
-              this.positionsCorps[i][0] += this.vitesse
-              break;
-
-            case 2: //Vers le bas
-
-              let bas = this.positionsCorps[i][1] + this.vitesse
-              this.positionsCorps[i][1] += this.vitesse
-              break;
-
-            case 3: //Vers la gauche 
-
-              let gauche = this.positionsCorps[i][0] - this.vitesse
-              this.positionsCorps[i][0] -= this.vitesse
-              break;
-    
-          }
-
-        }
-      }
-
-      //console.log('old Tete '+this.oldTetes[this.oldTetes.length - 1][0])
-      console.log('OLD TETE : ' + this.oldTetes)
-      console.log('OLD TETE 0 : ' + this.oldTetes[0])
-      console.log(this.oldTetes.length)
-      //console.log('position Tete '+this.positionTete)
-      //console.log('position Queue '+this.positionQueue)
+      
 
       for (var i = 0 ; i < this.oldTetes.length; i++) {
         console.log('controle '+this.oldTetes[i][0] == this.positionQueue[0] && this.oldTetes[i][1] == this.positionQueue[1])
