@@ -12,10 +12,10 @@ class ModelSerpent {
   	this.taille = 2; //tête et queue
 
   	this.score = 0;
-
   	this.vitesse = 32;
-    this.oldTete = []
-    this.oldQueue = []
+  	//this.direction = 1; //0: haut, 1: droite, 2:bas, 3: gauche
+    this.oldTetes = [];
+    this.oldQueue = [];
 
   	this.positionTete = positionDepartTete; //[x,y,z] Coordonnées x,y  + direction z
     this.positionTete[2] = 2;
@@ -34,17 +34,6 @@ class ModelSerpent {
 
   avancer(){
 
-  	//this.position .... 
-
-    //console.log(this.positionQueue+' '+this.positionTete+ ' '+ this.positionsCorps.length);
-          //sauvegarde des coordonnées actuelles pour supprimer
-
-     // if (this.positionsCorps.length == 0){
-
-       // this.positionQueue[0] = this.positionTete[0] - 32;
-        //this.positionQueue[1] = this.positionTete[1] - 32;
-      
-      //}
 
       let oldTete = []
       oldTete[0] = this.positionTete[0] 
@@ -87,20 +76,13 @@ class ModelSerpent {
 
       if (this.positionsCorps.length != 0){
 
-        this.positionsCorps[0][0] = oldTete[0];
-        this.positionsCorps[0][1] = oldTete[1];
-        this.positionsCorps[0][2] = oldTete[2];
+        this.positionsCorps.unshift([oldTete[0], oldTete[1], oldTete[2]])
         
         this.positionQueue[0] = this.positionsCorps[this.positionsCorps.length - 1][0];
         this.positionQueue[1] = this.positionsCorps[this.positionsCorps.length - 1][1];
         this.positionQueue[2] = this.positionsCorps[this.positionsCorps.length - 1][2];
 
-        for (var i = this.positionsCorps.length - 1; i >= 1; i--) {
-          this.positionsCorps[i][0] = this.positionsCorps[i - 1][0];
-          this.positionsCorps[i][1] = this.positionsCorps[i - 1][1];
-          this.positionsCorps[i][2] = this.positionsCorps[i - 1][2];
-        
-        }
+        this.positionsCorps.pop()
 
       } else {
         //console.log('oldTete ' + oldTete + ' new tete ' + this.positionTete)
@@ -111,37 +93,7 @@ class ModelSerpent {
 
       
 
-      /*switch(this.positionQueue[2]){
-
-        case 0:  //Vers le haut
-
-          let haut = this.positionQueue[1] - this.vitesse
-          this.positionQueue[1] -= this.vitesse
-
-          break;
-      
-        case 1: //Vers la droite
-
-          let droite = this.positionQueue[0] + this.vitesse
-          this.positionQueue[0] += this.vitesse
-          break;
-
-        case 2: //Vers le bas
-
-          let bas = this.positionQueue[1] + this.vitesse
-          this.positionQueue[1] += this.vitesse
-          break;
-
-        case 3: //Vers la gauche 
-
-          let gauche = this.positionQueue[0] - this.vitesse
-          this.positionQueue[0] -= this.vitesse
-          break;
-  
-      }*/
-
-      this.set_score(1);
-
+      this.set_score(1);  
     
   }
 
@@ -165,9 +117,8 @@ class ModelSerpent {
     oldTeteCourant[2] = this.positionTete[2]
     this.oldTetes.push(oldTeteCourant)
     console.log('old tetes deplacer'+this.oldTetes)
-
-    this.oldTete = this.positionTete;
     this.iconeTete.src = "images/new/headsnake" + this.positionTete[2] + ".png";
+
   }
 
   detecter_fruit(positionFruit){
@@ -236,39 +187,44 @@ class ModelSerpent {
   	this.taille += 1;
     let positionAjoutCorp = []
 
-    if(this.positionQueue[2] == 0){
+    positionAjoutCorp[0] = this.oldTetes[this.oldTetes.length -1][0] 
+    positionAjoutCorp[1] = this.oldTetes[this.oldTetes.length -1][1] 
+    positionAjoutCorp[2] = this.oldTetes[this.oldTetes.length -1][2] 
+    this.positionsCorps.unshift([positionAjoutCorp[0], positionAjoutCorp[1], positionAjoutCorp[2]])
 
-      positionAjoutCorp[0] = this.positionQueue[0] 
-      positionAjoutCorp[1] = this.positionQueue[1] + 32
-      positionAjoutCorp[2] = this.positionQueue[2]
-      this.positionsCorps.push(this.positionQueue) 
+    /*if(this.positionTete[2] == 0){
 
-    } else if (this.positionQueue[2] == 1){
+      positionAjoutCorp[0] = this.positionTete[0] 
+      positionAjoutCorp[1] = this.positionTete[1] + 32
+      positionAjoutCorp[2] = this.positionTete[2]
+      this.positionsCorps.unshift([this.positionTete[0], this.positionTete[1], this.positionTete[2]]) 
 
-      positionAjoutCorp[0] = this.positionQueue[0] - 32
-      positionAjoutCorp[1] = this.positionQueue[1] 
-      positionAjoutCorp[2] = this.positionQueue[2]
-      this.positionsCorps.push(this.positionQueue)
+    } else if (this.positionTete[2] == 1){
 
-    } else if (this.positionQueue[2] == 2){
+      positionAjoutCorp[0] = this.positionTete[0] - 32
+      positionAjoutCorp[1] = this.positionTete[1] 
+      positionAjoutCorp[2] = this.positionTete[2]
+      this.positionsCorps.unshift([this.positionTete[0], this.positionTete[1], this.positionTete[2]]) 
 
-      positionAjoutCorp[0] = this.positionQueue[0] 
-      positionAjoutCorp[1] = this.positionQueue[1] - 32
-      positionAjoutCorp[2] = this.positionQueue[2]
-      this.positionsCorps.push(this.positionQueue)
+    } else if (this.positionTete[2] == 2){
 
-    } else if (this.positionQueue[2] == 3){
+      positionAjoutCorp[0] = this.positionTete[0] 
+      positionAjoutCorp[1] = this.positionTete[1] - 32
+      positionAjoutCorp[2] = this.positionTete[2]
+      this.positionsCorps.unshift([this.positionTete[0], this.positionTete[1], this.positionTete[2]]) 
 
-      positionAjoutCorp[0] = this.positionQueue[0] + 32
-      positionAjoutCorp[1] = this.positionQueue[1] 
-      positionAjoutCorp[2] = this.positionQueue[2]
-      this.positionsCorps.push(this.positionQueue)
+    } else if (this.positionTete[2] == 3){
 
-    }
+      positionAjoutCorp[0] = this.positionTete[0] + 32
+      positionAjoutCorp[1] = this.positionTete[1] 
+      positionAjoutCorp[2] = this.positionTete[2]
+      this.positionsCorps.unshift([this.positionTete[0], this.positionTete[1], this.positionTete[2]]) 
 
-    this.positionQueue[0] = positionAjoutCorp[0];
-    this.positionQueue[1] = positionAjoutCorp[1];
-    this.positionQueue[2] = positionAjoutCorp[2];
+    }*/
+
+    //this.positionQueue[0] = positionAjoutCorp[0];
+    //this.positionQueue[1] = positionAjoutCorp[1];
+    //this.positionQueue[2] = positionAjoutCorp[2];
     this.score+=100;
 
     this.audioManger.play();
@@ -287,8 +243,15 @@ class ModelSerpent {
 
   }
 
+
   detecter_corps(){
 
+    for (var i = 0; i<this.positionsCorps.length; i++){
+      if ( this.positionTete[0] == this.positionsCorps[i][0] && this.positionTete[1] == this.positionsCorp[i][1]){
+        this.mourir()
+      }
+
+    }
     return 0;
 
 

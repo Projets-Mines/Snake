@@ -5,7 +5,7 @@ class Controller {
     this.carte = carte;
     this.view = view;
     var t = this;
-    this.timer = setInterval(function(){t.generate_avancer();}, 500); //timer pour déplacer l'ennemi
+    this.timer = setInterval(function(){t.generate_avancer();}, 300); //timer pour déplacer l'ennemi
     
   }
 
