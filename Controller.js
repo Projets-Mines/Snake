@@ -5,7 +5,7 @@ class Controller {
     this.carte = carte;
     this.view = view;
     var t = this;
-    this.timer = setInterval(function(){t.generate_avancer();}, 200); //timer pour déplacer l'ennemi
+    this.timer = setInterval(function(){t.generate_avancer();}, 500); //timer pour déplacer l'ennemi
     
   }
 
@@ -53,7 +53,7 @@ class Controller {
     
 
       //console.log('c')
-      this.serpent.avancer()
+      //this.serpent.avancer()
       //this.serpent.detecterMurs(this.view.positionsWall);
       var iconeTete = this.serpent.iconeTete;
       var iconeCorps = this.serpent.iconeCorps;
