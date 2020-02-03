@@ -9,8 +9,6 @@ class View {
     this.serpent = false;
     this.fruit = false;
 
-    this.positionsWall = [];
-
   }
 
   disp_background(){
@@ -18,12 +16,13 @@ class View {
   	this.canvas.style.background="url('" + this.backgroundPath + "')";
   }
 
-  disp_walls(imgWall,x,y){
+
+  disp_walls(imgWall,positionsWall){
 
     this.walls = true;
 
     this.imgWall = imgWall;
-    this.positionsWall.push([x,y]);
+    this.positionsWall = positionsWall;
 
     this.disp_all();
   }
@@ -64,18 +63,20 @@ class View {
 
   }
 
-  disp_score(score){
+  disp_score(score,highScore){
 
     var score_label = document.getElementById("score");
     score_label.innerHTML = score;
 
-  }
+    var high_score_div = document.getElementById("high_score");
+    high_score_div.innerHTML = "High Score : " + highScore;
 
+  }
 
   disp_all(){
  
     var context = this.context;
-    context.clearRect(0, 0, 700, 700);
+    context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     
     if(this.walls){
       for(var i=0; i<this.positionsWall.length; i++){
